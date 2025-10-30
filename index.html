@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zenú Viva | Plataforma Cultural</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      background-color: #0a0a0a;
+      color: #f7e6ac;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+    }
+    .gold-text { color: #f7d47a; }
+    .btn-dorado {
+      background-color: #f7d47a;
+      color: #000;
+      transition: all 0.3s;
+    }
+    .btn-dorado:hover {
+      background-color: #d4b85c;
+      color: white;
+    }
+    .hero-bg {
+      background-image: url('img/trenzado-header.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+    .overlay {
+      background: rgba(0, 0, 0, 0.7);
+    }
+    .info-card {
+      background: rgba(26, 26, 26, 0.7);
+      border: 1px solid #f7d47a;
+      transition: all 0.3s ease;
+    }
+    .info-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(247, 212, 122, 0.2);
+    }
+    /* Estilos para el menú móvil */
+    .mobile-menu {
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
+    }
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+    .menu-overlay {
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    .menu-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    /* Botón hamburguesa */
+    .hamburger-line {
+      transition: all 0.3s ease;
+    }
+    .hamburger.open .hamburger-line:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+    }
+    .hamburger.open .hamburger-line:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.open .hamburger-line:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+  </style>
+</head>
+
+<body class="flex flex-col min-h-screen">
+
+  <!-- 🔸 NAVBAR ACTUALIZADO CON MENÚ HAMBURGUESA -->
+  <header class="bg-cover bg-center" style="background-image: url('img/cultura.jpg');">
+    <nav class="flex justify-between items-center px-6 py-4 bg-black/70 relative">
+      <div class="flex items-center space-x-3">
+        <img src="img/Logo3.png" alt="Logo Zenú" class="w-12 h-12 rounded-full">
+        <h1 class="text-2xl font-bold text-[#f7d47a]">Zenú Viva</h1>
+      </div>
+      
+      <!-- Menú para desktop -->
+      <ul class="hidden md:flex space-x-8 text-[#f7d47a] font-semibold">
+        <li><a href="index.html" class="text-white border-b-2 border-[#f7d47a]">Inicio</a></li>
+        <li><a href="sistema.html" class="hover:text-white">Sistema</a></li>
+        <li><a href="ecommerce.html" class="hover:text-white">Tienda</a></li>
+        <li><a href="comunidad.html" class="hover:text-white">Comunidad</a></li>
+        <li><a href="contacto.html" class="hover:text-white">Contacto</a></li>
+      </ul>
+
+      <!-- Botón hamburguesa para móvil -->
+      <button class="md:hidden hamburger w-8 h-8 flex flex-col justify-between items-center" id="hamburger-btn">
+        <span class="hamburger-line w-full h-1 bg-[#f7d47a] rounded"></span>
+        <span class="hamburger-line w-full h-1 bg-[#f7d47a] rounded"></span>
+        <span class="hamburger-line w-full h-1 bg-[#f7d47a] rounded"></span>
+      </button>
+    </nav>
+
+    <!-- Menú móvil -->
+    <div class="menu-overlay fixed inset-0 bg-black/90 z-50 md:hidden" id="menu-overlay">
+      <div class="mobile-menu absolute top-0 right-0 w-3/4 h-full bg-[#1a1a1a] border-l border-[#f7d47a] shadow-2xl">
+        <div class="p-6">
+          <div class="flex justify-between items-center mb-8">
+            <img src="img/Logo3.png" alt="Logo Zenú" class="w-10 h-10 rounded-full">
+            <button class="text-[#f7d47a] text-2xl" id="close-menu">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          
+          <ul class="space-y-6">
+            <li>
+              <a href="index.html" class="flex items-center text-2xl font-bold text-white border-b-2 border-[#f7d47a] pb-2">
+                <i class="fas fa-home mr-4 text-[#f7d47a]"></i>
+                Inicio
+              </a>
+            </li>
+            <li>
+              <a href="sistema.html" class="flex items-center text-2xl font-semibold text-[#f7e6ac] hover:text-white transition">
+                <i class="fas fa-database mr-4 text-[#f7d47a]"></i>
+                Sistema
+              </a>
+            </li>
+            <li>
+              <a href="ecommerce.html" class="flex items-center text-2xl font-semibold text-[#f7e6ac] hover:text-white transition">
+                <i class="fas fa-shopping-bag mr-4 text-[#f7d47a]"></i>
+                Tienda
+              </a>
+            </li>
+            <li>
+              <a href="comunidad.html" class="flex items-center text-2xl font-semibold text-[#f7e6ac] hover:text-white transition">
+                <i class="fas fa-users mr-4 text-[#f7d47a]"></i>
+                Comunidad
+              </a>
+            </li>
+            <li>
+              <a href="contacto.html" class="flex items-center text-2xl font-semibold text-[#f7e6ac] hover:text-white transition">
+                <i class="fas fa-envelope mr-4 text-[#f7d47a]"></i>
+                Contacto
+              </a>
+            </li>
+          </ul>
+
+          <!-- Redes sociales en menú móvil -->
+          <div class="absolute bottom-8 left-6 right-6">
+            <div class="border-t border-[#f7d47a] pt-6">
+              <p class="text-[#f7d47a] font-semibold mb-4">Síguenos en:</p>
+              <div class="flex space-x-6">
+                <a href="https://www.facebook.com" target="_blank" class="text-2xl text-[#f7e6ac] hover:text-white">
+                  <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://www.instagram.com" target="_blank" class="text-2xl text-[#f7e6ac] hover:text-white">
+                  <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com" target="_blank" class="text-2xl text-[#f7e6ac] hover:text-white">
+                  <i class="fab fa-youtube"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center py-20 bg-black/60">
+      <h1 class="text-5xl md:text-7xl font-bold mb-6 gold-text">Zenú Viva</h1>
+      <p class="text-2xl md:text-3xl max-w-4xl mx-auto text-[#f7e6ac] leading-tight">
+        Plataforma ancestral que conecta historia, identidad y comercio justo del pueblo Zenú en Medellín
+      </p>
+      <div class="mt-12 flex flex-col sm:flex-row justify-center gap-6">
+        <a href="sistema.html" class="btn-dorado px-10 py-4 rounded-full font-semibold text-lg">
+          <i class="fas fa-database mr-3"></i>Sistema de Información
+        </a>
+        <a href="ecommerce.html" class="border-2 border-[#f7d47a] text-[#f7d47a] px-10 py-4 rounded-full font-semibold text-lg hover:bg-[#f7d47a] hover:text-black transition">
+          <i class="fas fa-shopping-bag mr-3"></i>Tienda Artesanal
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 🔸 INFORMACIÓN DE LA COMUNIDAD ZENÚ -->
+  <section class="max-w-7xl mx-auto py-20 px-6">
+    <div class="info-card rounded-2xl p-10 mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold mb-8 gold-text text-center">Nuestra Comunidad Zenú en Medellín</h2>
+      
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div>
+          <p class="text-xl leading-relaxed text-[#f7e6ac] mb-8 text-justify">
+            Somos <strong class="gold-text text-2xl">965 personas Zenúes censadas y reconocidas oficialmente</strong> por el Ministerio del Interior, habitantes del territorio urbano de <strong class="gold-text">Medellín y el Valle de Aburrá</strong>. Pertenecemos a una de las culturas más antiguas de Colombia, con raíces que se remontan a más de 2.000 años en los valles de los ríos Sinú y San Jorge.
+          </p>
+          
+          <p class="text-xl leading-relaxed text-[#f7e6ac] mb-8 text-justify">
+            Nuestro pueblo fue reconocido por su avanzada organización social e hidráulica, reflejada en los canales de drenaje que transformaron los humedales del Caribe en campos fértiles. Hoy, en contexto urbano, seguimos tejiendo nuestra historia a través del arte, la educación, la economía solidaria y la protección de nuestro conocimiento ancestral.
+          </p>
+        </div>
+        
+        <div class="bg-black/40 p-8 rounded-xl border-2 border-[#f7d47a]">
+          <h3 class="text-2xl font-bold gold-text mb-6 text-center">Datos de Nuestra Comunidad</h3>
+          <div class="space-y-5">
+            <div class="flex items-center">
+              <i class="fas fa-users text-[#f7d47a] text-2xl w-10"></i>
+              <span class="ml-4 text-lg"><strong class="gold-text text-xl">965</strong> personas censadas</span>
+            </div>
+            <div class="flex items-center">
+              <i class="fas fa-city text-[#f7d47a] text-2xl w-10"></i>
+              <span class="ml-4 text-lg">Habitantes de <strong class="gold-text">Medellín y Valle de Aburrá</strong></span>
+            </div>
+            <div class="flex items-center">
+              <i class="fas fa-history text-[#f7d47a] text-2xl w-10"></i>
+              <span class="ml-4 text-lg"><strong class="gold-text text-xl">2.000+ años</strong> de historia cultural</span>
+            </div>
+            <div class="flex items-center">
+              <i class="fas fa-handshake text-[#f7d47a] text-2xl w-10"></i>
+              <span class="ml-4 text-lg">Parte de la <strong class="gold-text">Mesa de Concertación</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <p class="text-xl leading-relaxed text-[#f7e6ac] text-justify mt-8">
+        En Medellín, formamos parte activa de la <strong class="gold-text text-xl">Mesa de Concertación de los Pueblos Indígenas</strong> y trabajamos por la visibilización, el fortalecimiento cultural y el acceso a la información mediante herramientas tecnológicas propias, que nos permitan preservar nuestras raíces en un mundo digital.
+      </p>
+    </div>
+
+    <!-- 🔸 INNOVACIÓN CON IDENTIDAD -->
+    <div class="info-card rounded-2xl p-10">
+      <h2 class="text-4xl md:text-5xl font-bold mb-8 gold-text text-center">Innovación con Identidad</h2>
+      
+      <div class="grid md:grid-cols-2 gap-10 items-start">
+        <div>
+          <p class="text-xl leading-relaxed text-[#f7e6ac] mb-8 text-justify">
+            La <strong class="gold-text text-2xl">Plataforma Zenú Viva</strong> integra un <strong class="gold-text text-xl">Sistema de Información Comunitario</strong> que organiza datos sobre salud, educación, emprendimiento y cultura Zenú en Medellín. Este sistema busca mejorar la planificación local, la gestión de recursos y la conexión entre nuestras familias.
+          </p>
+          
+          <p class="text-xl leading-relaxed text-[#f7e6ac] text-justify">
+            A su vez, la plataforma cuenta con un <strong class="gold-text text-xl">Espacio de E-commerce Cultural</strong> donde los productos Zenúes y de otras comunidades indígenas pueden comercializarse mediante <strong class="gold-text text-xl">estrategias de storytelling</strong>, contando la historia detrás de cada tejido, artesanía o alimento tradicional.
+          </p>
+        </div>
+        
+        <div class="bg-black/40 p-8 rounded-xl border-2 border-[#f7d47a]">
+          <h3 class="text-2xl font-bold gold-text mb-6 text-center">Características de la Plataforma</h3>
+          <div class="space-y-5">
+            <div class="flex items-start">
+              <i class="fas fa-chart-line text-[#f7d47a] text-2xl w-10 mt-1"></i>
+              <span class="ml-4 text-lg"><strong class="gold-text">Sistema de Información</strong> comunitario integrado</span>
+            </div>
+            <div class="flex items-start">
+              <i class="fas fa-store text-[#f7d47a] text-2xl w-10 mt-1"></i>
+              <span class="ml-4 text-lg"><strong class="gold-text">E-commerce cultural</strong> con storytelling</span>
+            </div>
+            <div class="flex items-start">
+              <i class="fas fa-expand-arrows-alt text-[#f7d47a] text-2xl w-10 mt-1"></i>
+              <span class="ml-4 text-lg">Modelo <strong class="gold-text">escalable y replicable</strong></span>
+            </div>
+            <div class="flex items-start">
+              <i class="fas fa-shield-alt text-[#f7d47a] text-2xl w-10 mt-1"></i>
+              <span class="ml-4 text-lg"><strong class="gold-text">Soberanía de datos</strong> y autonomía digital</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-10 text-center">
+        <p class="text-xl leading-relaxed text-[#f7e6ac] italic">
+          Este modelo es <strong class="gold-text text-2xl">escalable y replicable</strong> a otros pueblos indígenas y minorías en Colombia, promoviendo la autonomía digital, la soberanía de los datos y el comercio justo desde una perspectiva intercultural.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🔸 SERVICIOS DE LA PLATAFORMA -->
+  <section class="bg-[#111] py-16 border-t-2 border-[#f7d47a]">
+    <div class="max-w-7xl mx-auto px-6">
+      <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center gold-text">Nuestros Servicios</h2>
+      
+      <div class="grid md:grid-cols-3 gap-10">
+        <!-- Servicio 1 -->
+        <div class="info-card rounded-2xl p-8 text-center">
+          <div class="text-5xl mb-6 gold-text">
+            <i class="fas fa-database"></i>
+          </div>
+          <h3 class="text-2xl font-bold mb-4 gold-text">Sistema de Información</h3>
+          <p class="text-lg text-[#f7e6ac] mb-6 leading-relaxed">
+            Gestión comunitaria de datos en salud, educación y cultura para mejorar la planificación y conexión entre familias Zenú.
+          </p>
+          <a href="sistema.html" class="btn-dorado px-6 py-3 rounded-full font-semibold text-base">
+            Explorar Sistema
+          </a>
+        </div>
+
+        <!-- Servicio 2 -->
+        <div class="info-card rounded-2xl p-8 text-center">
+          <div class="text-5xl mb-6 gold-text">
+            <i class="fas fa-shopping-bag"></i>
+          </div>
+          <h3 class="text-2xl font-bold mb-4 gold-text">Tienda Artesanal</h3>
+          <p class="text-lg text-[#f7e6ac] mb-6 leading-relaxed">
+            Comercio justo de artesanías Zenú con storytelling que preserva y comparte nuestra cultura ancestral.
+          </p>
+          <a href="ecommerce.html" class="btn-dorado px-6 py-3 rounded-full font-semibold text-base">
+            Visitar Tienda
+          </a>
+        </div>
+
+        <!-- Servicio 3 -->
+        <div class="info-card rounded-2xl p-8 text-center">
+          <div class="text-5xl mb-6 gold-text">
+            <i class="fas fa-users"></i>
+          </div>
+          <h3 class="text-2xl font-bold mb-4 gold-text">Comunidad Viva</h3>
+          <p class="text-lg text-[#f7e6ac] mb-6 leading-relaxed">
+            Espacio de conexión, intercambio cultural y fortalecimiento de nuestra identidad en contexto urbano.
+          </p>
+          <a href="comunidad.html" class="btn-dorado px-6 py-3 rounded-full font-semibold text-base">
+            Unirse a la Comunidad
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🔸 FOOTER ACTUALIZADO -->
+  <footer class="bg-cover bg-center mt-16" style="background-image: url('img/cultura.jpg');">
+    <div class="bg-black/70 text-center py-8 text-[#f7d47a]">
+      <h3 class="text-2xl font-bold mb-4">Cabildo Indígena Zenú de Medellín</h3>
+      <p class="text-lg mb-4">
+        Promoviendo la cultura, la economía ancestral y la conexión con la tierra a través de la innovación digital.
+      </p>
+      <div class="flex justify-center space-x-8 text-lg">
+        <a href="https://www.facebook.com" target="_blank" class="hover:text-white">Facebook</a>
+        <a href="https://www.instagram.com" target="_blank" class="hover:text-white">Instagram</a>
+        <a href="https://www.youtube.com" target="_blank" class="hover:text-white">YouTube</a>
+      </div>
+      <p class="mt-6 text-base text-[#f7e6ac]">© 2025 Zenú Viva. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Funcionalidad del menú hamburguesa
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const closeMenuBtn = document.getElementById('close-menu');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const hamburger = document.querySelector('.hamburger');
+
+    function openMenu() {
+      menuOverlay.classList.add('open');
+      hamburger.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      menuOverlay.classList.remove('open');
+      hamburger.classList.remove('open');
+      document.body.style.overflow = 'auto';
+    }
+
+    hamburgerBtn.addEventListener('click', openMenu);
+    closeMenuBtn.addEventListener('click', closeMenu);
+
+    // Cerrar menú al hacer clic fuera de él
+    menuOverlay.addEventListener('click', (e) => {
+      if (e.target === menuOverlay) {
+        closeMenu();
+      }
+    });
+
+    // Cerrar menú al presionar Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeMenu();
+      }
+    });
+
+    // Cerrar menú al hacer clic en un enlace (para móviles)
+    const menuLinks = document.querySelectorAll('.mobile-menu a');
+    menuLinks.forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+  </script>
+
+</body>
+</html>

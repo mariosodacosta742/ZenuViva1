@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Información - Zenú Viva</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      background-color: #0a0a0a;
+      color: #f7e6ac;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+    }
+    .gold-text { color: #f7d47a; }
+    .btn-dorado {
+      background-color: #f7d47a;
+      color: #000;
+      transition: all 0.3s;
+    }
+    .btn-dorado:hover {
+      background-color: #d4b85c;
+      color: white;
+    }
+    .hero-bg {
+      background-image: url('img/cultura.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+    .overlay {
+      background: rgba(0, 0, 0, 0.7);
+    }
+    .stat-card {
+      background: rgba(26, 26, 26, 0.7);
+      border: 1px solid #f7d47a;
+      transition: all 0.3s ease;
+    }
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(247, 212, 122, 0.2);
+    }
+    /* Estilos para el menú móvil */
+    .mobile-menu {
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
+    }
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+    .menu-overlay {
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    .menu-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    /* Botón hamburguesa */
+    .hamburger-line {
+      transition: all 0.3s ease;
+    }
+    .hamburger.open .hamburger-line:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+    }
+    .hamburger.open .hamburger-line:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.open .hamburger-line:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+  </style>
+</head>
+
+<body class="flex flex-col min-h-screen">
+
+  <!-- 🔸 NAVBAR ACTUALIZADO CON MENÚ HAMBURGUESA -->
+  <header class="bg-cover bg-center" style="background-image: url('img/cultura.jpg');">
+    <nav class="flex justify-between items-center px-6 py-4 bg-black/70 relative">
+      <div class="flex items-center space-x-3">
+        <img src="img/Logo3.png" alt="Logo Zenú" class="w-12 h-12 rounded-full">
+        <h1 class="text-2xl font-bold text-[#f7d47a]">Zenú Viva</h1>
+      </div>
+      
+      <!-- Menú para desktop -->
+      <ul class="hidden md:flex space-x-8 text-[#f7d47a] font-semibold">
+        <li><a href="index.html" class="hover:text-white">Inicio</a></li>
+        <li><a href="sistema.html" class="text-white border-b-2 border-[#f7d47a]">Sistema</a></li>
+        <li><a href="ecommerce.html" class="hover:text-white">Tienda</a></li>
+        <li><a href="comunidad.html" class="hover:text-white">Comunidad</a></li>
+        <li><a href="contacto.html" class="hover:text-white">Contacto</a></li>
+      </ul>
+
+      <!-- Botón hamburguesa para móvil -->
+      <button class="md:hidden hamburger w-8 h-8 flex flex-col justify-between items-center" id="hamburger-btn">
+        <span class="hamburger-line w-full h-1 bg-[#f7d47a] rounded"></span>
+        <span class="hamburger-line w-full h-1 bg-[#f7d47a] rounded"></span>
+        <span class="hamburger-line w-full h-1 bg-[#f7d47a] rounded"></span>
+      </button>
+    </nav>
+
+    <!-- Menú móvil -->
+    <div class="menu-overlay fixed inset-0 bg-black/90 z-50 md:hidden" id="menu-overlay">
+      <div class="mobile-menu absolute top-0 right-0 w-3/4 h-full bg-[#1a1a1a] border-l border-[#f7d47a] shadow-2xl">
+        <div class="p-6">
+          <div class="flex justify-between items-center mb-8">
+            <img src="img/Logo3.png" alt="Logo Zenú" class="w-10 h-10 rounded-full">
+            <button class="text-[#f7d47a] text-2xl" id="close-menu">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          
+          <ul class="space-y-6">
+            <li>
+              <a href="index.html" class="flex items-center text-2xl font-semibold text-[#f7e6ac] hover:text-white transition">
+                <i class="fas fa-home mr-4 text-[#f7d47a]"></i>
+                Inicio
+              </a>
+            </li>
+            <li>
+              <a href="sistema.html" class="flex items-center text-2xl font-bold text-white border-b-2 border-[#f7d47a] pb-2">
+                <i class="fas fa-database mr-4 text-[#f7d47a]"></i>
+                Sistema
+              </a>
+            </li>
+            <li>
+              <a href="ecommerce.html" class="flex items-center text-2xl font-semibold text-[#f7e6ac] hover:text-white transition">
+                <i class="fas fa-shopping-bag mr-4 text-[#f7d47a]"></i>
+                Tienda
+              </a>
+            </li>
+            <li>
+              <a href="comunidad.html" class="flex items-center text-2xl font-semibold text-[#f7e6ac] hover:text-white transition">
+                <i class="fas fa-users mr-4 text-[#f7d47a]"></i>
+                Comunidad
+              </a>
+            </li>
+            <li>
+              <a href="contacto.html" class="flex items-center text-2xl font-semibold text-[#f7e6ac] hover:text-white transition">
+                <i class="fas fa-envelope mr-4 text-[#f7d47a]"></i>
+                Contacto
+              </a>
+            </li>
+          </ul>
+
+          <!-- Redes sociales en menú móvil -->
+          <div class="absolute bottom-8 left-6 right-6">
+            <div class="border-t border-[#f7d47a] pt-6">
+              <p class="text-[#f7d47a] font-semibold mb-4">Síguenos en:</p>
+              <div class="flex space-x-6">
+                <a href="https://www.facebook.com" target="_blank" class="text-2xl text-[#f7e6ac] hover:text-white">
+                  <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://www.instagram.com" target="_blank" class="text-2xl text-[#f7e6ac] hover:text-white">
+                  <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com" target="_blank" class="text-2xl text-[#f7e6ac] hover:text-white">
+                  <i class="fab fa-youtube"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="text-center py-12 bg-black/60">
+      <h2 class="text-4xl font-bold mb-4">Sistema de Información del Pueblo Zenú</h2>
+      <p class="max-w-3xl mx-auto text-lg text-[#f7e6ac]">
+        El Cabildo Indígena Zenú de Medellín está conformado por <strong>965 personas y 320 familias</strong>
+        que habitan en el Valle de Aburrá. Este sistema busca fortalecer la gestión de datos comunitarios en
+        salud, educación, cultura y bienestar familiar, preservando nuestra identidad ancestral.
+      </p>
+    </div>
+  </header>
+
+  <!-- 🔸 ESTADÍSTICAS PRINCIPALES -->
+  <section class="max-w-6xl mx-auto py-12 px-6">
+    <h3 class="text-3xl font-bold mb-8 text-center gold-text border-b border-[#f7d47a] pb-2">Datos Estadísticos de la Comunidad</h3>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <!-- Estadística 1 -->
+      <div class="stat-card rounded-2xl p-6 text-center">
+        <div class="text-4xl mb-4 gold-text">
+          <i class="fas fa-users"></i>
+        </div>
+        <h4 class="text-xl font-bold mb-2">Población Total</h4>
+        <p class="text-3xl gold-text font-bold">965</p>
+        <p class="text-sm text-[#f7e6ac]">Miembros registrados</p>
+      </div>
+
+      <!-- Estadística 2 -->
+      <div class="stat-card rounded-2xl p-6 text-center">
+        <div class="text-4xl mb-4 gold-text">
+          <i class="fas fa-home"></i>
+        </div>
+        <h4 class="text-xl font-bold mb-2">Familias</h4>
+        <p class="text-3xl gold-text font-bold">320</p>
+        <p class="text-sm text-[#f7e6ac]">Núcleos familiares</p>
+      </div>
+
+      <!-- Estadística 3 -->
+      <div class="stat-card rounded-2xl p-6 text-center">
+        <div class="text-4xl mb-4 gold-text">
+          <i class="fas fa-child"></i>
+        </div>
+        <h4 class="text-xl font-bold mb-2">Menores de Edad</h4>
+        <p class="text-3xl gold-text font-bold">285</p>
+        <p class="text-sm text-[#f7e6ac]">Entre 0-17 años</p>
+      </div>
+
+      <!-- Estadística 4 -->
+      <div class="stat-card rounded-2xl p-6 text-center">
+        <div class="text-4xl mb-4 gold-text">
+          <i class="fas fa-user-graduate"></i>
+        </div>
+        <h4 class="text-xl font-bold mb-2">Estudiantes</h4>
+        <p class="text-3xl gold-text font-bold">412</p>
+        <p class="text-sm text-[#f7e6ac]">En todos los niveles</p>
+      </div>
+    </div>
+
+    <!-- Segunda fila de estadísticas -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <!-- Estadística 5 -->
+      <div class="stat-card rounded-2xl p-6 text-center">
+        <div class="text-4xl mb-4 gold-text">
+          <i class="fas fa-heartbeat"></i>
+        </div>
+        <h4 class="text-xl font-bold mb-2">Atención en Salud</h4>
+        <p class="text-3xl gold-text font-bold">743</p>
+        <p class="text-sm text-[#f7e6ac]">Consultas este año</p>
+      </div>
+
+      <!-- Estadística 6 -->
+      <div class="stat-card rounded-2xl p-6 text-center">
+        <div class="text-4xl mb-4 gold-text">
+          <i class="fas fa-seedling"></i>
+        </div>
+        <h4 class="text-xl font-bold mb-2">Medicina Ancestral</h4>
+        <p class="text-3xl gold-text font-bold">128</p>
+        <p class="text-sm text-[#f7e6ac]">Tratamientos registrados</p>
+      </div>
+
+      <!-- Estadística 7 -->
+      <div class="stat-card rounded-2xl p-6 text-center">
+        <div class="text-4xl mb-4 gold-text">
+          <i class="fas fa-hands-helping"></i>
+        </div>
+        <h4 class="text-xl font-bold mb-2">Participación</h4>
+        <p class="text-3xl gold-text font-bold">89%</p>
+        <p class="text-sm text-[#f7e6ac]">En actividades comunitarias</p>
+      </div>
+
+      <!-- Estadística 8 -->
+      <div class="stat-card rounded-2xl p-6 text-center">
+        <div class="text-4xl mb-4 gold-text">
+          <i class="fas fa-tshirt"></i>
+        </div>
+        <h4 class="text-xl font-bold mb-2">Artesanos Activos</h4>
+        <p class="text-3xl gold-text font-bold">156</p>
+        <p class="text-sm text-[#f7e6ac]">En producción cultural</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🔸 CENTRO DE REGISTRO -->
+  <section class="bg-[#111] py-12 border-t border-[#f7d47a]">
+    <div class="max-w-6xl mx-auto px-6">
+      <h3 class="text-3xl font-bold mb-6 text-center gold-text">Centro de Registro Zenú Viva</h3>
+      <p class="text-center mb-8 text-[#f7e6ac]">Selecciona el tipo de registro que deseas realizar:</p>
+
+      <!-- Desplegable de opciones -->
+      <div class="flex justify-center mb-10">
+        <select id="tipoRegistro" class="bg-[#1a1a1a] border border-[#f7d47a] text-white px-4 py-2 rounded-lg w-full md:w-1/2">
+          <option value="">-- Seleccionar tipo de registro --</option>
+          <option value="familia">Registrar nueva familia</option>
+          <option value="integrante">Registrar integrante familiar</option>
+          <option value="salud">Registrar información de salud</option>
+          <option value="ancestral">Registrar salud ancestral</option>
+          <option value="educacion">Registrar información educativa</option>
+        </select>
+      </div>
+
+      <!-- Contenedor de formularios -->
+      <div id="formularios" class="space-y-8">
+        <!-- Formulario: Nueva Familia -->
+        <div id="formFamilia" class="hidden bg-black/60 p-6 rounded-2xl shadow-lg border border-[#f7d47a]">
+          <h4 class="text-2xl font-bold mb-4 gold-text">Registro de Nueva Familia</h4>
+          <form class="space-y-4">
+            <div>
+              <label class="block mb-2">Nombre de la familia:</label>
+              <input type="text" class="w-full px-3 py-2 rounded bg-[#1a1a1a] border border-[#f7d47a] text-white">
+            </div>
+            <div>
+              <label class="block mb-2">Dirección o barrio:</label>
+              <input type="text" class="w-full px-3 py-2 rounded bg-[#1a1a1a] border border-[#f7d47a] text-white">
+            </div>
+            <div>
+              <label class="block mb-2">Número de integrantes:</label>
+              <input type="number" class="w-full px-3 py-2 rounded bg-[#1a1a1a] border border-[#f7d47a] text-white">
+            </div>
+            <button class="btn-dorado px-6 py-2 rounded font-bold">Guardar Familia</button>
+          </form>
+        </div>
+
+        <!-- Formulario: Integrante -->
+        <div id="formIntegrante" class="hidden bg-black/60 p-6 rounded-2xl shadow-lg border border-[#f7d47a]">
+          <h4 class="text-2xl font-bold mb-4 gold-text">Registro de Integrante Familiar</h4>
+          <form class="space-y-4">
+            <div>
+              <label class="block mb-2">Nombre completo:</label>
+              <input type="text" class="w-full px-3 py-2 rounded bg-[#1a1a1a] border border-[#f7d47a] text-white">
+            </div>
+            <div>
+              <label class="block mb-2">Edad:</label>
+              <input type="number" class="w-full px-3 py-2 rounded bg-[#1a1a1a] border border-[#f7d47a] text-white">
+            </div>
+            <div>
+              <label class="block mb-2">Parentesco:</label>
+              <input type="text" class="w-full px-3 py-2 rounded bg-[#1a1a1a] border border-[#f7d47a] text-white">
+            </div>
+            <button class="btn-dorado px-6 py-2 rounded font-bold">Guardar Integrante</button>
+          </form>
+        </div>
+
+        <!-- Formulario: Salud -->
+        <div id="formSalud" class="hidden bg-black/60 p-6 rounded-2xl shadow-lg border border-[#f7d47a]">
+          <h4 class="text-2xl font-bold mb-4 gold-text">Registro de Información en Salud</h4>
+          <form class="space-y-4">
+            <div>
+              <label class="block mb-2">Nombre del integrante:</label>
+              <input type="text" class="w-full px-3 py-2 rounded bg-[#1a1a1a] border border-[#f7d47a] text-white">
+            </div>
+            <div>
+              <label class="block mb-2">Tipo de atención:</label>
+              <select class="w-full px-3 py-2 rounded bg-[#1a1a1a] border border-[#f7d47a] text-white">
+                <option>Consulta general</option>
+                <option>Salud preventiva</option>
+                <option>Control médico</option>
+              </select>
+            </div>
+            <div>
+              <label class="block mb-2">Observaciones:</label>
+              <textarea class="w-full px-3 py-2 rounded bg-[#1a1a1a] border border-[#f7d47a] text-white"></textarea>
+            </div>
+            <button class="btn-dorado px-6 py-2 rounded font-bold">Guardar Salud</button>
+          </form>
+        </div>
+
+        <!-- Formulario: Salud Ancestral -->
+        <div id="formAncestral" class="hidden bg-black/60 p-6 rounded-2xl shadow-lg border border-[#f7d47a]">
+          <h4 class="text-2xl font-bold mb-4 gold-text">Registro de Salud Ancestral</h4>
+          <form class="space-y-4">
+            <div>
+              <label class="block mb-2">Nombre del paciente:</label>
+              <input type="text" class="w-full px-3 py-2 rounded bg-[#1a1a1a] border border-[#f7d47a] text-white">
+            </div>
+            <div>
+              <label class="block mb-2">Tratamiento o planta utilizada:</label>
+              <input type="text" class="w-full px-3 py-2 rounded bg-[#1a1a1a] border border-[#f7d47a] text-white">
+            </div>
+            <div>
+              <label class="block mb-2">Observaciones:</label>
+              <textarea class="w-full px-3 py-2 rounded bg-[#1a1a1a] border border-[#f7d47a] text-white"></textarea>
+            </div>
+            <button class="btn-dorado px-6 py-2 rounded font-bold">Guardar Ancestral</button>
+          </form>
+        </div>
+
+        <!-- Formulario: Educación -->
+        <div id="formEducacion" class="hidden bg-black/60 p-6 rounded-2xl shadow-lg border border-[#f7d47a]">
+          <h4 class="text-2xl font-bold mb-4 gold-text">Registro de Información Educativa</h4>
+          <form class="space-y-4">
+            <div>
+              <label class="block mb-2">Nombre del estudiante:</label>
+              <input type="text" class="w-full px-3 py-2 rounded bg-[#1a1a1a] border border-[#f7d47a] text-white">
+            </div>
+            <div>
+              <label class="block mb-2">Nivel educativo:</label>
+              <select class="w-full px-3 py-2 rounded bg-[#1a1a1a] border border-[#f7d47a] text-white">
+                <option>Primaria</option>
+                <option>Secundaria</option>
+                <option>Técnico</option>
+                <option>Universitario</option>
+              </select>
+            </div>
+            <button class="btn-dorado px-6 py-2 rounded font-bold">Guardar Educación</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Sugerencia de venta -->
+      <div class="mt-12 text-center">
+        <a href="ecommerce.html" class="text-[#f7d47a] underline hover:text-white text-lg">
+          🧺 Apoya el bienestar de las familias Zenú adquiriendo nuestras artesanías →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🔸 FOOTER ACTUALIZADO -->
+  <footer class="bg-cover bg-center mt-12" style="background-image: url('img/cultura.jpg');">
+    <div class="bg-black/70 text-center py-6 text-[#f7d47a]">
+      <h3 class="text-xl font-bold mb-3">Cabildo Indígena Zenú de Medellín</h3>
+      <p class="mb-4">
+        Promoviendo la cultura, la economía ancestral y la conexión con la tierra a través de la innovación digital.
+      </p>
+      <div class="flex justify-center space-x-6">
+        <a href="https://www.facebook.com" target="_blank" class="hover:text-white">Facebook</a>
+        <a href="https://www.instagram.com" target="_blank" class="hover:text-white">Instagram</a>
+        <a href="https://www.youtube.com" target="_blank" class="hover:text-white">YouTube</a>
+      </div>
+      <p class="mt-6 text-sm text-[#f7e6ac]">© 2025 Zenú Viva. Sistema de Información. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Funcionalidad del menú hamburguesa
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const closeMenuBtn = document.getElementById('close-menu');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const hamburger = document.querySelector('.hamburger');
+
+    function openMenu() {
+      menuOverlay.classList.add('open');
+      hamburger.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      menuOverlay.classList.remove('open');
+      hamburger.classList.remove('open');
+      document.body.style.overflow = 'auto';
+    }
+
+    hamburgerBtn.addEventListener('click', openMenu);
+    closeMenuBtn.addEventListener('click', closeMenu);
+
+    // Cerrar menú al hacer clic fuera de él
+    menuOverlay.addEventListener('click', (e) => {
+      if (e.target === menuOverlay) {
+        closeMenu();
+      }
+    });
+
+    // Cerrar menú al presionar Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeMenu();
+      }
+    });
+
+    // Cerrar menú al hacer clic en un enlace (para móviles)
+    const menuLinks = document.querySelectorAll('.mobile-menu a');
+    menuLinks.forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    // Funcionalidad del sistema de registro
+    const tipoRegistro = document.getElementById('tipoRegistro');
+    const formularios = {
+      familia: document.getElementById('formFamilia'),
+      integrante: document.getElementById('formIntegrante'),
+      salud: document.getElementById('formSalud'),
+      ancestral: document.getElementById('formAncestral'),
+      educacion: document.getElementById('formEducacion')
+    };
+
+    tipoRegistro.addEventListener('change', () => {
+      for (let key in formularios) formularios[key].classList.add('hidden');
+      const seleccion = tipoRegistro.value;
+      if (formularios[seleccion]) formularios[seleccion].classList.remove('hidden');
+    });
+  </script>
+</body>
+</html>

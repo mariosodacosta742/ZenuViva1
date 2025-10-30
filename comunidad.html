@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comunidad Zenú - Zenú Viva</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      background-color: #0a0a0a;
+      color: #f7e6ac;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+    }
+    .gold-text { color: #f7d47a; }
+    .btn-dorado {
+      background-color: #f7d47a;
+      color: #000;
+      transition: all 0.3s;
+    }
+    .btn-dorado:hover {
+      background-color: #d4b85c;
+      color: white;
+    }
+    .hero-bg {
+      background-image: url('img/trenzado-header.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+    .overlay {
+      background: rgba(0, 0, 0, 0.7);
+    }
+    .info-card {
+      background: rgba(26, 26, 26, 0.7);
+      border: 1px solid #f7d47a;
+      transition: all 0.3s ease;
+    }
+    .info-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(247, 212, 122, 0.2);
+    }
+    .map-container {
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      border: 2px solid #f7d47a;
+    }
+    .comuna-marker {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #f7d47a;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(247, 212, 122, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(247, 212, 122, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(247, 212, 122, 0); }
+    }
+    /* Estilos para el menú móvil */
+    .mobile-menu {
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
+    }
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+    .menu-overlay {
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    .menu-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    /* Botón hamburguesa */
+    .hamburger-line {
+      transition: all 0.3s ease;
+    }
+    .hamburger.open .hamburger-line:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+    }
+    .hamburger.open .hamburger-line:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.open .hamburger-line:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+    /* Estilos mejorados para el mapa */
+    .comuna-area {
+      position: absolute;
+      border: 2px solid #f7d47a;
+      background: rgba(247, 212, 122, 0.1);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    .comuna-area:hover {
+      background: rgba(247, 212, 122, 0.2);
+      transform: scale(1.05);
+    }
+    .comuna-label {
+      position: absolute;
+      background: #f7d47a;
+      color: #000;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 12px;
+      z-index: 10;
+    }
+  </style>
+</head>
+
+<body class="flex flex-col min-h-screen">
+
+  <!-- 🔸 NAVBAR ACTUALIZADO CON MENÚ HAMBURGUESA -->
+  <header class="bg-cover bg-center" style="background-image: url('img/Cultura.jpg');">
+    <nav class="flex justify-between items-center px-6 py-4 bg-black/70 relative">
+      <div class="flex items-center space-x-3">
+        <img src="img/Logo3.png" alt="Logo Zenú" class="w-12 h-12 rounded-full">
+        <h1 class="text-2xl font-bold text-[#f7d47a]">Zenú Viva</h1>
+      </div>
+      
+      <!-- Menú para desktop -->
+      <ul class="hidden md:flex space-x-8 text-[#f7d47a] font-semibold">
+        <li><a href="index.html" class="hover:text-white">Inicio</a></li>
+        <li><a href="sistema.html" class="hover:text-white">Sistema</a></li>
+        <li><a href="ecommerce.html" class="hover:text-white">Tienda</a></li>
+        <li><a href="comunidad.html" class="text-white border-b-2 border-[#f7d47a]">Comunidad</a></li>
+        <li><a href="contacto.html" class="hover:text-white">Contacto</a></li>
+      </ul>
+
+      <!-- Botón hamburguesa para móvil -->
+      <button class="md:hidden hamburger w-8 h-8 flex flex-col justify-between items-center" id="hamburger-btn">
+        <span class="hamburger-line w-full h-1 bg-[#f7d47a] rounded"></span>
+        <span class="hamburger-line w-full h-1 bg-[#f7d47a] rounded"></span>
+        <span class="hamburger-line w-full h-1 bg-[#f7d47a] rounded"></span>
+      </button>
+    </nav>
+
+    <!-- Menú móvil -->
+    <div class="menu-overlay fixed inset-0 bg-black/90 z-50 md:hidden" id="menu-overlay">
+      <div class="mobile-menu absolute top-0 right-0 w-3/4 h-full bg-[#1a1a1a] border-l border-[#f7d47a] shadow-2xl">
+        <div class="p-6">
+          <div class="flex justify-between items-center mb-8">
+            <img src="img/Logo3.png" alt="Logo Zenú" class="w-10 h-10 rounded-full">
+            <button class="text-[#f7d47a] text-2xl" id="close-menu">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          
+          <ul class="space-y-6">
+            <li>
+              <a href="index.html" class="flex items-center text-2xl font-semibold text-[#f7e6ac] hover:text-white transition">
+                <i class="fas fa-home mr-4 text-[#f7d47a]"></i>
+                Inicio
+              </a>
+            </li>
+            <li>
+              <a href="sistema.html" class="flex items-center text-2xl font-semibold text-[#f7e6ac] hover:text-white transition">
+                <i class="fas fa-database mr-4 text-[#f7d47a]"></i>
+                Sistema
+              </a>
+            </li>
+            <li>
+              <a href="ecommerce.html" class="flex items-center text-2xl font-semibold text-[#f7e6ac] hover:text-white transition">
+                <i class="fas fa-shopping-bag mr-4 text-[#f7d47a]"></i>
+                Tienda
+              </a>
+            </li>
+            <li>
+              <a href="comunidad.html" class="flex items-center text-2xl font-bold text-white border-b-2 border-[#f7d47a] pb-2">
+                <i class="fas fa-users mr-4 text-[#f7d47a]"></i>
+                Comunidad
+              </a>
+            </li>
+            <li>
+              <a href="contacto.html" class="flex items-center text-2xl font-semibold text-[#f7e6ac] hover:text-white transition">
+                <i class="fas fa-envelope mr-4 text-[#f7d47a]"></i>
+                Contacto
+              </a>
+            </li>
+          </ul>
+
+          <!-- Redes sociales en menú móvil -->
+          <div class="absolute bottom-8 left-6 right-6">
+            <div class="border-t border-[#f7d47a] pt-6">
+              <p class="text-[#f7d47a] font-semibold mb-4">Síguenos en:</p>
+              <div class="flex space-x-6">
+                <a href="https://www.facebook.com" target="_blank" class="text-2xl text-[#f7e6ac] hover:text-white">
+                  <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://www.instagram.com" target="_blank" class="text-2xl text-[#f7e6ac] hover:text-white">
+                  <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com" target="_blank" class="text-2xl text-[#f7e6ac] hover:text-white">
+                  <i class="fab fa-youtube"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center py-16 bg-black/60">
+      <h1 class="text-4xl md:text-6xl font-bold mb-6 gold-text">Comunidad Zenú Viva</h1>
+      <p class="text-xl md:text-2xl max-w-4xl mx-auto text-[#f7e6ac]">
+        Conectando tradición, territorio y educación en Medellín
+      </p>
+    </div>
+  </header>
+
+  <!-- 🔸 INFORMACIÓN IMPORTANTE DEL PUEBLO ZENÚ -->
+  <section class="max-w-7xl mx-auto py-16 px-6">
+    <div class="info-card rounded-2xl p-10 mb-12">
+      <h2 class="text-4xl md:text-5xl font-bold mb-8 gold-text text-center">Nuestra Historia y Cultura</h2>
+      
+      <div class="grid md:grid-cols-2 gap-10">
+        <div>
+          <h3 class="text-2xl font-bold gold-text mb-4">Orígenes Milenarios</h3>
+          <p class="text-lg leading-relaxed text-[#f7e6ac] mb-6">
+            El pueblo Zenú posee una historia que se remonta a más de <strong class="gold-text">2,000 años</strong> en los valles de los ríos Sinú y San Jorge. Nuestros ancestros fueron reconocidos como ingenieros hidráulicos excepcionales, creando complejos sistemas de canales que transformaron humedales en tierras fértiles.
+          </p>
+          <p class="text-lg leading-relaxed text-[#f7e6ac]">
+            La <strong class="gold-text">caña flecha</strong> no es solo un material para nosotros, es el hilo que teje nuestra identidad, resistencia y conexión espiritual con la Madre Tierra.
+          </p>
+        </div>
+        
+        <div class="bg-black/40 p-6 rounded-xl border border-[#f7d47a]">
+          <h3 class="text-2xl font-bold gold-text mb-4 text-center">Símbolos Culturales</h3>
+          <div class="space-y-4">
+            <div class="flex items-start">
+              <i class="fas fa-hat-cowboy text-[#f7d47a] text-xl w-8 mt-1"></i>
+              <span class="ml-3 text-lg"><strong class="gold-text">Sombrero Vueltiao</strong> - Patrimonio Cultural</span>
+            </div>
+            <div class="flex items-start">
+              <i class="fas fa-water text-[#f7d47a] text-xl w-8 mt-1"></i>
+              <span class="ml-3 text-lg"><strong class="gold-text">Sistemas Hidráulicos</strong> - Ingeniería ancestral</span>
+            </div>
+            <div class="flex items-start">
+              <i class="fas fa-hands text-[#f7d47a] text-xl w-8 mt-1"></i>
+              <span class="ml-3 text-lg"><strong class="gold-text">Tejido Espiritual</strong> - Conexión cósmica</span>
+            </div>
+            <div class="flex items-start">
+              <i class="fas fa-seedling text-[#f7d47a] text-xl w-8 mt-1"></i>
+              <span class="ml-3 text-lg"><strong class="gold-text">Medicina Tradicional</strong> - Sabiduría ancestral</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🔸 MEDICINA ANCESTRAL -->
+  <section class="bg-[#111] py-16 border-t border-[#f7d47a]">
+    <div class="max-w-7xl mx-auto px-6">
+      <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center gold-text">Medicina Ancestral Zenú</h2>
+      
+      <div class="grid md:grid-cols-2 gap-10">
+        <div class="info-card rounded-2xl p-8">
+          <h3 class="text-2xl font-bold gold-text mb-6">Plantas Medicinales y Sabiduría Curativa</h3>
+          <div class="space-y-6">
+            <div class="flex items-start">
+              <i class="fas fa-leaf text-[#f7d47a] text-xl w-8 mt-1"></i>
+              <div class="ml-4">
+                <h4 class="text-xl font-semibold gold-text mb-2">Yarumo</h4>
+                <p class="text-[#f7e6ac]">Utilizado para problemas respiratorios y circulatorios</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <i class="fas fa-seedling text-[#f7d47a] text-xl w-8 mt-1"></i>
+              <div class="ml-4">
+                <h4 class="text-xl font-semibold gold-text mb-2">Altamisa</h4>
+                <p class="text-[#f7e6ac]">Para dolores menstruales y problemas digestivos</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <i class="fas fa-spa text-[#f7d47a] text-xl w-8 mt-1"></i>
+              <div class="ml-4">
+                <h4 class="text-xl font-semibold gold-text mb-2">Tabaco Sagrado</h4>
+                <p class="text-[#f7e6ac]">Uso ceremonial y limpieza espiritual</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <i class="fas fa-hand-holding-medical text-[#f7d47a] text-xl w-8 mt-1"></i>
+              <div class="ml-4">
+                <h4 class="text-xl font-semibold gold-text mb-2">Prácticas de Curación</h4>
+                <p class="text-[#f7e6ac]">Limpiezas espirituales, sobadas y armonización energética</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="info-card rounded-2xl p-8">
+          <h3 class="text-2xl font-bold gold-text mb-6">Guardianes del Conocimiento</h3>
+          <p class="text-lg leading-relaxed text-[#f7e6ac] mb-6">
+            Nuestros <strong class="gold-text">médicos tradicionales</strong> preservan el conocimiento ancestral sobre el uso de plantas medicinales, rituales de curación y la conexión entre el cuerpo, la mente y el espíritu.
+          </p>
+          <div class="bg-black/40 p-6 rounded-xl border border-[#f7d47a]">
+            <h4 class="text-xl font-bold gold-text mb-3">Sabiduría Transgeneracional</h4>
+            <p class="text-[#f7e6ac]">
+              El conocimiento se transmite oralmente de generación en generación, manteniendo viva la relación sagrada con la naturaleza y los elementos.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🔸 UBICACIÓN EN MEDELLÍN -->
+  <section class="max-w-7xl mx-auto py-16 px-6">
+    <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center gold-text">Nuestra Presencia en Medellín</h2>
+    
+    <div class="grid md:grid-cols-2 gap-10">
+      <div class="info-card rounded-2xl p-8">
+        <h3 class="text-2xl font-bold gold-text mb-6">Comunas de Concentración Zenú</h3>
+        
+        <div class="space-y-6">
+          <div class="flex items-start">
+            <div class="bg-[#f7d47a] text-black rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4">3</div>
+            <div>
+              <h4 class="text-xl font-semibold gold-text mb-2">Comuna 3 - Manrique</h4>
+              <p class="text-[#f7e6ac]">Familias Zenú establecidas en sectores como La Salle, María Cano y Granizal</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start">
+            <div class="bg-[#f7d47a] text-black rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4">4</div>
+            <div>
+              <h4 class="text-xl font-semibold gold-text mb-2">Comuna 4 - Aranjuez</h4>
+              <p class="text-[#f7e6ac]">Comunidad activa en procesos culturales y organizativos del sector</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start">
+            <div class="bg-[#f7d47a] text-black rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4">10</div>
+            <div>
+              <h4 class="text-xl font-semibold gold-text mb-2">Comuna 10 - La Candelaria</h4>
+              <p class="text-[#f7e6ac]">Presencia en el centro de la ciudad con actividades culturales y educativas</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-8 bg-black/40 p-6 rounded-xl border border-[#f7d47a]">
+          <h4 class="text-xl font-bold gold-text mb-3">Datos Demográficos</h4>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="text-center">
+              <p class="text-3xl font-bold gold-text">965</p>
+              <p class="text-sm text-[#f7e6ac]">Personas Zenú</p>
+            </div>
+            <div class="text-center">
+              <p class="text-3xl font-bold gold-text">320</p>
+              <p class="text-sm text-[#f7e6ac]">Familias</p>
+            </div>
+            <div class="text-center">
+              <p class="text-3xl font-bold gold-text">65%</p>
+              <p class="text-sm text-[#f7e6ac]">En comunas 3,4,10</p>
+            </div>
+            <div class="text-center">
+              <p class="text-3xl font-bold gold-text">89%</p>
+              <p class="text-sm text-[#f7e6ac]">Participación activa</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="info-card rounded-2xl p-8 map-container">
+        <h3 class="text-2xl font-bold gold-text mb-6 text-center">Mapa de Presencia Zenú en Medellín</h3>
+        <div class="relative bg-gray-800 rounded-xl h-96 overflow-hidden">
+          <!-- Mapa mejorado de Medellín -->
+          <div class="absolute inset-0 bg-gradient-to-br from-gray-700 to-gray-900">
+            
+            <!-- Comuna 3 - Manrique (Noreste) -->
+            <div class="comuna-area" style="top: 20%; left: 60%; width: 120px; height: 100px;">
+              <div class="comuna-label" style="top: -25px; left: 50%; transform: translateX(-50%);">Comuna 3 - Manrique</div>
+              <div class="comuna-marker" style="top: 50%; left: 50%;"></div>
+            </div>
+            
+            <!-- Comuna 4 - Aranjuez (Norte-central) -->
+            <div class="comuna-area" style="top: 35%; left: 45%; width: 100px; height: 80px;">
+              <div class="comuna-label" style="top: -25px; left: 50%; transform: translateX(-50%);">Comuna 4 - Aranjuez</div>
+              <div class="comuna-marker" style="top: 50%; left: 50%;"></div>
+            </div>
+            
+            <!-- Comuna 10 - La Candelaria (Centro) -->
+            <div class="comuna-area" style="top: 50%; left: 35%; width: 90px; height: 70px;">
+              <div class="comuna-label" style="top: -25px; left: 50%; transform: translateX(-50%);">Comuna 10 - La Candelaria</div>
+              <div class="comuna-marker" style="top: 50%; left: 50%;"></div>
+            </div>
+            
+            <!-- Puntos de referencia -->
+            <div class="absolute bottom-10 left-10 text-[#f7e6ac] text-sm">
+              <div class="flex items-center mb-2">
+                <div class="w-3 h-3 bg-[#f7d47a] rounded-full mr-2"></div>
+                <span>Río Medellín</span>
+              </div>
+              <div class="flex items-center">
+                <div class="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                <span>Cerro Nutibara</span>
+              </div>
+            </div>
+            
+            <!-- Leyenda -->
+            <div class="absolute top-4 left-4 bg-black/70 p-3 rounded-lg border border-[#f7d47a]">
+              <p class="text-[#f7d47a] font-bold text-sm mb-2">Comunas Zenú</p>
+              <div class="flex items-center mb-1">
+                <div class="w-3 h-3 bg-[#f7d47a] rounded-full mr-2"></div>
+                <span class="text-xs text-[#f7e6ac]">Alta concentración</span>
+              </div>
+              <div class="flex items-center">
+                <div class="w-3 h-3 border border-[#f7d47a] rounded-full mr-2"></div>
+                <span class="text-xs text-[#f7e6ac]">Zona de influencia</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="absolute bottom-4 left-0 right-0 text-center">
+            <p class="text-[#f7e6ac] text-sm">Áreas con mayor presencia de la comunidad Zenú en Medellín</p>
+          </div>
+        </div>
+        
+        <div class="mt-4 grid grid-cols-3 gap-2 text-center">
+          <div class="bg-black/40 p-2 rounded">
+            <p class="text-[#f7d47a] font-bold">Comuna 3</p>
+            <p class="text-xs text-[#f7e6ac]">285 familias</p>
+          </div>
+          <div class="bg-black/40 p-2 rounded">
+            <p class="text-[#f7d47a] font-bold">Comuna 4</p>
+            <p class="text-xs text-[#f7e6ac]">320 familias</p>
+          </div>
+          <div class="bg-black/40 p-2 rounded">
+            <p class="text-[#f7d47a] font-bold">Comuna 10</p>
+            <p class="text-xs text-[#f7e6ac]">215 familias</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🔸 OFERTAS ACADÉMICAS -->
+  <section class="bg-[#111] py-16 border-t border-[#f7d47a]">
+    <div class="max-w-7xl mx-auto px-6">
+      <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center gold-text">Oportunidades Académicas</h2>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Universidad 1 -->
+        <div class="info-card rounded-2xl p-6 text-center">
+          <div class="text-4xl mb-4 gold-text">
+            <i class="fas fa-university"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3 gold-text">Universidad de Antioquia</h3>
+          <p class="text-[#f7e6ac] mb-4">
+            Programas de becas para comunidades indígenas en carreras de salud, educación y ciencias sociales.
+          </p>
+          <div class="bg-black/40 p-3 rounded-lg">
+            <p class="text-sm gold-text">Convenio activo con el Cabildo Zenú</p>
+          </div>
+        </div>
+
+        <!-- Universidad 2 -->
+        <div class="info-card rounded-2xl p-6 text-center">
+          <div class="text-4xl mb-4 gold-text">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3 gold-text">Politécnico Colombiano</h3>
+          <p class="text-[#f7e6ac] mb-4">
+            Formación técnica y tecnológica en emprendimiento, turismo y desarrollo comunitario.
+          </p>
+          <div class="bg-black/40 p-3 rounded-lg">
+            <p class="text-sm gold-text">Programas con enfoque intercultural</p>
+          </div>
+        </div>
+
+        <!-- Universidad 3 -->
+        <div class="info-card rounded-2xl p-6 text-center">
+          <div class="text-4xl mb-4 gold-text">
+            <i class="fas fa-book"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3 gold-text">SENA Regional</h3>
+          <p class="text-[#f7e6ac] mb-4">
+            Capacitación en artesanías digitales, marketing cultural y gestión de proyectos comunitarios.
+          </p>
+          <div class="bg-black/40 p-3 rounded-lg">
+            <p class="text-sm gold-text">Cursos especializados para artesanos</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Información adicional -->
+      <div class="mt-12 info-card rounded-2xl p-8">
+        <h3 class="text-2xl font-bold gold-text mb-6 text-center">Proceso de Acceso a Educación Superior</h3>
+        <div class="grid md:grid-cols-4 gap-6 text-center">
+          <div>
+            <div class="bg-[#f7d47a] text-black rounded-full w-12 h-12 flex items-center justify-center font-bold text-xl mx-auto mb-3">1</div>
+            <p class="text-[#f7e6ac]">Inscripción en el sistema del Cabildo</p>
+          </div>
+          <div>
+            <div class="bg-[#f7d47a] text-black rounded-full w-12 h-12 flex items-center justify-center font-bold text-xl mx-auto mb-3">2</div>
+            <p class="text-[#f7e6ac]">Asesoría para aplicación a becas</p>
+          </div>
+          <div>
+            <div class="bg-[#f7d47a] text-black rounded-full w-12 h-12 flex items-center justify-center font-bold text-xl mx-auto mb-3">3</div>
+            <p class="text-[#f7e6ac]">Acompañamiento durante la carrera</p>
+          </div>
+          <div>
+            <div class="bg-[#f7d47a] text-black rounded-full w-12 h-12 flex items-center justify-center font-bold text-xl mx-auto mb-3">4</div>
+            <p class="text-[#f7e6ac]">Vinculación laboral y comunitaria</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🔸 INFORMACIÓN IMPORTANTE -->
+  <section class="max-w-7xl mx-auto py-16 px-6">
+    <div class="info-card rounded-2xl p-10">
+      <h2 class="text-4xl md:text-5xl font-bold mb-8 gold-text text-center">Información Importante para la Comunidad</h2>
+      
+      <div class="grid md:grid-cols-2 gap-10">
+        <div>
+          <h3 class="text-2xl font-bold gold-text mb-6">Próximos Eventos y Actividades</h3>
+          <div class="space-y-6">
+            <div class="bg-black/40 p-4 rounded-xl border-l-4 border-[#f7d47a]">
+              <h4 class="text-xl font-semibold gold-text mb-2">Encuentro de Medicina Ancestral</h4>
+              <p class="text-[#f7e6ac] mb-2">15 de Noviembre - Parque de Los Deseos</p>
+              <p class="text-sm text-[#f7e6ac]">Intercambio de saberes con médicos tradicionales</p>
+            </div>
+            <div class="bg-black/40 p-4 rounded-xl border-l-4 border-[#f7d47a]">
+              <h4 class="text-xl font-semibold gold-text mb-2">Feria Artesanal Zenú</h4>
+              <p class="text-[#f7e6ac] mb-2">22-24 de Noviembre - Jardín Botánico</p>
+              <p class="text-sm text-[#f7e6ac]">Exposición y venta de artesanías tradicionales</p>
+            </div>
+            <div class="bg-black/40 p-4 rounded-xl border-l-4 border-[#f7d47a]">
+              <h4 class="text-xl font-semibold gold-text mb-2">Taller de Tejido para Jóvenes</h4>
+              <p class="text-[#f7e6ac] mb-2">Todos los sábados - Sede Comuna 4</p>
+              <p class="text-sm text-[#f7e6ac]">Transmisión intergeneracional del conocimiento</p>
+            </div>
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-2xl font-bold gold-text mb-6">Contactos de Emergencia y Apoyo</h3>
+          <div class="space-y-4">
+            <div class="flex items-center justify-between bg-black/40 p-4 rounded-lg">
+              <div>
+                <p class="font-semibold gold-text">Línea de Salud Comunitaria</p>
+                <p class="text-[#f7e6ac] text-sm">Atención médica y tradicional</p>
+              </div>
+              <p class="text-xl font-bold gold-text">301 456 7890</p>
+            </div>
+            <div class="flex items-center justify-between bg-black/40 p-4 rounded-lg">
+              <div>
+                <p class="font-semibold gold-text">Atención Psicosocial</p>
+                <p class="text-[#f7e6ac] text-sm">Apoyo emocional y familiar</p>
+              </div>
+              <p class="text-xl font-bold gold-text">302 567 8901</p>
+            </div>
+            <div class="flex items-center justify-between bg-black/40 p-4 rounded-lg">
+              <div>
+                <p class="font-semibold gold-text">Coordinación Educativa</p>
+                <p class="text-[#f7e6ac] text-sm">Becas y procesos académicos</p>
+              </div>
+              <p class="text-xl font-bold gold-text">304 678 9012</p>
+            </div>
+          </div>
+          
+          <div class="mt-6 bg-black/40 p-4 rounded-xl border border-[#f7d47a]">
+            <h4 class="text-xl font-bold gold-text mb-3">Reuniones del Cabildo</h4>
+            <p class="text-[#f7e6ac]">Primer sábado de cada mes - 2:00 PM</p>
+            <p class="text-sm text-[#f7e6ac] mt-2">Sede principal: Carrera 45 # 65-28, Comuna 4 - Aranjuez</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🔸 FOOTER -->
+  <footer class="bg-cover bg-center mt-12" style="background-image: url('img/Cultura.jpg');">
+    <div class="bg-black/70 text-center py-6 text-[#f7d47a]">
+      <h3 class="text-xl font-bold mb-3">Cabildo Indígena Zenú de Medellín</h3>
+      <p class="mb-4">
+        Tejiendo comunidad, preservando identidad, construyendo futuro
+      </p>
+      <div class="flex justify-center space-x-6">
+        <a href="https://www.facebook.com" target="_blank" class="hover:text-white">Facebook</a>
+        <a href="https://www.instagram.com" target="_blank" class="hover:text-white">Instagram</a>
+        <a href="https://www.youtube.com" target="_blank" class="hover:text-white">YouTube</a>
+      </div>
+      <p class="mt-6 text-sm text-[#f7e6ac]">© 2025 Zenú Viva. Comunidad. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Funcionalidad del menú hamburguesa
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const closeMenuBtn = document.getElementById('close-menu');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const hamburger = document.querySelector('.hamburger');
+
+    function openMenu() {
+      menuOverlay.classList.add('open');
+      hamburger.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      menuOverlay.classList.remove('open');
+      hamburger.classList.remove('open');
+      document.body.style.overflow = 'auto';
+    }
+
+    hamburgerBtn.addEventListener('click', openMenu);
+    closeMenuBtn.addEventListener('click', closeMenu);
+
+    // Cerrar menú al hacer clic fuera de él
+    menuOverlay.addEventListener('click', (e) => {
+      if (e.target === menuOverlay) {
+        closeMenu();
+      }
+    });
+
+    // Cerrar menú al presionar Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeMenu();
+      }
+    });
+
+    // Cerrar menú al hacer clic en un enlace (para móviles)
+    const menuLinks = document.querySelectorAll('.mobile-menu a');
+    menuLinks.forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+  </script>
+
+</body>
+</html>
